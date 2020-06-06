@@ -20,4 +20,17 @@ public class ProductServiceTest {
             throw e;
         }
     }
+
+    @Test(expected = RuntimeException.class)
+    public void throw_exception_when_product_quality_lt_0() {
+        ProductService productService = new ProductServiceImpl();
+        try {
+            Product product = new Product();
+            product.setQuality(-1);
+            productService.addProduct(product);
+        } catch (Exception e) {
+            Assert.assertEquals(ErrorMessages.QUALITY_INVALID, e.getMessage());
+            throw e;
+        }
+    }
 }
