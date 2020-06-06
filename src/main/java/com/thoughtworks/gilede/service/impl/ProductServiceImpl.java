@@ -33,7 +33,10 @@ public class ProductServiceImpl implements ProductService {
             product.setQuality(product.getQuality() - (product.getSellIn() < 0 ? 2 : 1));
             product.setQuality(product.getQuality() < 0 ? 0 : product.getQuality());
         } else if (product.getType() == ProductType.BACKSTAGE_PASS) {
+            product.setSellIn(product.getSellIn() - 1);
+            if (product.getSellIn() <= 10) {
 
+            }
         }
         return product;
     }
