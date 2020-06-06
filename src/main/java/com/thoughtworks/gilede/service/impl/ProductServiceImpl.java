@@ -4,6 +4,7 @@ import com.thoughtworks.gilede.dao.ProductDao;
 import com.thoughtworks.gilede.dao.constant.ErrorMessages;
 import com.thoughtworks.gilede.dao.impl.ProductDaoImpl;
 import com.thoughtworks.gilede.model.Product;
+import com.thoughtworks.gilede.model.ProductType;
 import com.thoughtworks.gilede.service.ProductService;
 
 public class ProductServiceImpl implements ProductService {
@@ -22,5 +23,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getById(String productId) {
         return productDao.getById(productId);
+    }
+
+    @Override
+    public Product reduceSellIn(String productId, int days) {
+        assert (days > 0);
+        Product product = productDao.getById(productId);
+        if (product.getType() == ProductType.NORMAL) {
+            product.setSellIn(product.getSellIn() - 1);
+            product.setQuality(product.getQuality() - 1);
+        } else if (product.getType() == ProductType.BACKSTAGE_PASS) {
+
+        }
+        return product;
     }
 }

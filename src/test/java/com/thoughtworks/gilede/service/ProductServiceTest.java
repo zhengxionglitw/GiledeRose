@@ -38,12 +38,24 @@ public class ProductServiceTest {
     @Test
     public void add_product_success() {
         ProductService productService = new ProductServiceImpl();
-        Product product = new Product();
-        product.setType(ProductType.NORMAL);
-        product.setQuality(50);
-        product.setSellIn(10);
-        String productId = productService.addProduct(product);
+        String productId = productService.addProduct(generateProduct(ProductType.NORMAL, 50, 10));
         Assert.assertNotNull(productId);
         Assert.assertNotNull(productService.getById(productId));
+    }
+
+    @Test
+    public void test_normal_product_quality_reduce_1_success() {
+        ProductService productService = new ProductServiceImpl();
+        String id = productService.addProduct(generateProduct(ProductType.NORMAL, 50, 10));
+        Product product = productService.reduceSellIn(id, 1);
+        Assert.assertTrue(product.getQuality() == 49);
+    }
+
+    private Product generateProduct(ProductType type, int quality, int sellIn) {
+        Product product = new Product();
+        product.setType(type);
+        product.setQuality(quality);
+        product.setSellIn(sellIn);
+        return product;
     }
 }
