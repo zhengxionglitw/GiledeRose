@@ -26,12 +26,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product reduceSellIn(String productId, int days) {
-        assert (days > 0);
+    public Product reduceSellIn(String productId) {
         Product product = productDao.getById(productId);
         if (product.getType() == ProductType.NORMAL) {
             product.setSellIn(product.getSellIn() - 1);
-            product.setQuality(product.getQuality() - 1);
+            product.setQuality(product.getQuality() - (product.getSellIn() < 0 ? 2 : 1));
+            product.setQuality(product.getQuality() < 0 ? 0 : product.getQuality());
         } else if (product.getType() == ProductType.BACKSTAGE_PASS) {
 
         }

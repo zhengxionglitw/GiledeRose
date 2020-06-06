@@ -44,11 +44,30 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void test_normal_product_quality_reduce_1_success() {
+    public void normal_product_quality_reduce_1_success() {
         ProductService productService = new ProductServiceImpl();
         String id = productService.addProduct(generateProduct(ProductType.NORMAL, 50, 10));
-        Product product = productService.reduceSellIn(id, 1);
+        Product product = productService.reduceSellIn(id);
         Assert.assertTrue(product.getQuality() == 49);
+    }
+
+    @Test
+    public void normal_product_quality_reduce_2_success() {
+        ProductService productService = new ProductServiceImpl();
+        String id = productService.addProduct(generateProduct(ProductType.NORMAL, 50, 0));
+        Product product = productService.reduceSellIn(id);
+        Assert.assertTrue(product.getQuality() == 48);
+    }
+
+    @Test
+    public void normal_product_quality_can_not_lt_0() {
+        ProductService productService = new ProductServiceImpl();
+        String id = productService.addProduct(generateProduct(ProductType.NORMAL, 1, 0));
+        Product product = null;
+        for (int i = 0; i < 5; i++) {
+            product = productService.reduceSellIn(id);
+        }
+        Assert.assertTrue(product.getQuality() == 0);
     }
 
     private Product generateProduct(ProductType type, int quality, int sellIn) {
