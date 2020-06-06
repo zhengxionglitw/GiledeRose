@@ -100,7 +100,7 @@ public class ProductServiceTest {
         ProductService productService = new ProductServiceImpl();
         String id = productService.addProduct(generateProduct(ProductType.BACKSTAGE_PASS, 10, 2));
         Product product = null;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             product = productService.reduceSellIn(id);
         }
 
