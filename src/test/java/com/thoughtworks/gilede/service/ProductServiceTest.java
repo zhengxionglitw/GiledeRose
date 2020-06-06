@@ -95,6 +95,18 @@ public class ProductServiceTest {
         Assert.assertTrue(product.getQuality() == 13);
     }
 
+    @Test
+    public void backstage_pass_quality_is_0_when_over_sell_in() {
+        ProductService productService = new ProductServiceImpl();
+        String id = productService.addProduct(generateProduct(ProductType.BACKSTAGE_PASS, 10, 2));
+        Product product = null;
+        for (int i = 0; i < 4; i++) {
+            product = productService.reduceSellIn(id);
+        }
+
+        Assert.assertTrue(product.getQuality() == 0);
+    }
+
     private Product generateProduct(ProductType type, int quality, int sellIn) {
         Product product = new Product();
         product.setType(type);
