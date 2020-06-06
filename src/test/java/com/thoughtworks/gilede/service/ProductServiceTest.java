@@ -79,6 +79,14 @@ public class ProductServiceTest {
     }
 
 
+    @Test
+    public void backstage_pass_quality_rise_2() {
+        ProductService productService = new ProductServiceImpl();
+        String id = productService.addProduct(generateProduct(ProductType.BACKSTAGE_PASS, 10, 11));
+        Product product = productService.reduceSellIn(id);
+        Assert.assertTrue(product.getQuality() == 12);
+    }
+
     private Product generateProduct(ProductType type, int quality, int sellIn) {
         Product product = new Product();
         product.setType(type);
