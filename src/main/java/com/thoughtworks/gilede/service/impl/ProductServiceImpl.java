@@ -39,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
             } else if (product.getSellIn() < 0) {
                 product.setQuality(0);
             }
+            product.setQuality(product.getQuality() > 50 ? 50 : product.getQuality());
         }
         return product;
     }
